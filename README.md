@@ -2,8 +2,9 @@
 <p align="center">
   <img src="assets/logo.png" width="24%" />
   <img src="assets/web.jpg" width="24%" />
-  <img src="assets/cover3.jpg" width="24%" />
-  <img src="assets/cover4.jpg" width="24%" />
+  <img src="assets/mob.jpg" width="24%" />
+  <img src="assets/col.jpg" width="24%" />
+  <img src="assets/email.png" width="24%" />
 </p>
 
 <h1 align="center">🛡️ Industrial Safety Monitoring System</h1>
@@ -42,17 +43,22 @@ The system continuously measures the environment and:
   - Temperature & humidity (DHT22)  
   - Gas/air quality levels (MQ135)  
   - Vibrations / shocks (vibration sensor)
+ 
+    <img src="assets/col.jpg" width="24%" />
 
 - 📊 **Web Dashboard**
   - Live sensor readings
   - Status indicators (Safe / Warning / Critical)
   - Mobile-friendly interface
+  <img src="assets/web.jpg" width="24%" />
+  <img src="assets/mob.jpg" width="24%" />
 
 - 📧 **Email Alerts**
   - Automatic email when:
     - Temperature too high
     - Gas level above safe limit
     - Abnormal vibration detected
+    <img src="assets/email.png" width="24%" />
 
 - 🚨 **Automatic Safety Actions**
   - Buzzer ON for immediate alert  
