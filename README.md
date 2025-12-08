@@ -1,7 +1,7 @@
 <!-- Banner / 4 Photo Collage -->
 <p align="center">
-  <img src="assets/cover1.jpg" width="24%" />
-  <img src="assets/cover2.jpg" width="24%" />
+  <img src="assets/logo.png" width="24%" />
+  <img src="assets/web.jpg" width="24%" />
   <img src="assets/cover3.jpg" width="24%" />
   <img src="assets/cover4.jpg" width="24%" />
 </p>
