@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Industrial Safety Web Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: #121214; color: #e8e8e8; font-family: 'Segoe UI'; text-align: center; padding: 20px; }
+        h1 { color: #e2e9ed; }
+        canvas { max-width: 250px; margin: 15px; display: inline-block; }
+        #status { font-weight: bold; padding: 12px; border-radius: 8px; margin: 20px auto; width: 80%; background: #22c55e; }
+    </style>
+</head>
+<body>
+    <h1>Industrial Safety Monitoring Dashboard</h1>
+    <div id="status">Status: Loading... | Alarm: OK | Fan: OFF</div>
+    
+    <div>
+        <canvas id="tempChart" width="200" height="200"></canvas>
+        <h3>Temperature (°C)</h3>
+    </div>
+    <div>
+        <canvas id="gasChart" width="200" height="200"></canvas>
+        <h3>Gas Level (%)</h3>
+    </div>
+    <div>
+        <canvas id="vibChart" width="200" height="200"></canvas>
+        <h3>Vibration (%)</h3>
+    </div>
+
+    <script>
+        // Get canvases
+        const tempCtx = document.getElementById('tempChart').getContext('2d');
+        const gasCtx = document.getElementById('gasChart').getContext('2d');
+        const vibCtx = document.getElementById('vibChart').getContext('2d');
+
+        // Initialize doughnut charts (gauges)
+        const tempChart = new Chart(tempCtx, {
+            type: 'doughnut',
+            data: { datasets: [{ data: [0, 100], backgroundColor: ['#22c55e', '#3b3f52'] }] },
+            options: { cutout: '70%', responsive: false, plugins: { legend: { display: false } } }
+        });
+        const gasChart = new Chart(gasCtx, {
+            type: 'doughnut',
+            data: { datasets: [{ data: [0, 100], backgroundColor: ['#22c55e', '#3b3f52'] }] },
+            options: { cutout: '70%', responsive: false, plugins: { legend: { display: false } } }
+        });
+        const vibChart = new Chart(vibCtx, {
+            type: 'doughnut',
+            data: { datasets: [{ data: [0, 100], backgroundColor: ['#22c55e', '#3b3f52'] }] },
+            options: { cutout: '70%', responsive: false, plugins: { legend: { display: false } } }
+        });
+
+        // Update function
+        function updateData() {
+            fetch('/data')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    // Update charts
+                    tempChart.data.datasets[0].data = [data.temp || 0, 100 - (data.temp || 0)];
+                    gasChart.data.datasets[0].data = [data.gas || 0, 100 - (data.gas || 0)];
+                    vibChart.data.datasets[0].data = [data.vib || 0, 100 - (data.vib || 0)];
+                    tempChart.update(); gasChart.update(); vibChart.update();
+
+                    // Update status
+                    const status = document.getElementById('status');
+                    status.innerHTML = `Updated: ${new Date((data.timestamp || 0) * 1000).toLocaleTimeString()} | Alarm: ${data.alarm ? 'ACTIVE (Critical!)' : 'OK'} | Fan: ${data.fan_on ? 'ON' : 'OFF'}`;
+                    status.style.background = data.alarm ? '#ef4444' : '#22c55e';
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    document.getElementById('status').innerHTML = 'Error: Connection failed - Check console.';
+                    document.getElementById('status').style.background = '#f97316';
+                });
+        }
+
+        // Initial load and auto-update every 2 seconds
+        updateData();
+        setInterval(updateData, 2000);
+    </script>
+</body>
+</html>
