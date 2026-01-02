@@ -12,6 +12,7 @@
 <p align="center">
   Real-time monitoring for temperature, gas leaks & vibrations with email alerts, web dashboard and automatic safety actions.
 </p>
+[![Video Thumbnail](assets/Screenshot 2026-01-02 202332.png)](assets/industrial saftety monitoring.mp4)
 
 ---
 
